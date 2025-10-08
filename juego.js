@@ -7,6 +7,55 @@ const nombres = [
   params.get("j4") || "Jugador 4"
 ];
 
+// 🔹 Crear ecuaciones matemáticas flotantes en el fondo
+function crearEcuacionesMatematicas() {
+  const ecuaciones = [
+    "x² + y² = r²",
+    "a² + b² = c²",
+    "π = 3.14159...",
+    "e = 2.71828...",
+    "√2 = 1.41421...",
+    "φ = (1+√5)/2",
+    "sin²θ + cos²θ = 1",
+    "∫f(x)dx",
+    "lim x→∞",
+    "∑n=1∞",
+    "∂f/∂x",
+    "∇f",
+    "α + β = γ",
+    "log₁₀(x)",
+    "2ⁿ",
+    "n!",
+    "C(n,k)",
+    "P(A|B)",
+    "E[X] = μ",
+    "σ² = Var(X)"
+  ];
+
+  ecuaciones.forEach((ecuacion, index) => {
+    setTimeout(() => {
+      const elemento = document.createElement('div');
+      elemento.className = 'equation';
+      elemento.textContent = ecuacion;
+      elemento.style.left = Math.random() * 100 + '%';
+      elemento.style.animationDelay = Math.random() * 5 + 's';
+      elemento.style.fontSize = (Math.random() * 10 + 16) + 'px';
+      document.body.appendChild(elemento);
+
+      // Remover elemento después de la animación
+      setTimeout(() => {
+        if (elemento.parentNode) {
+          elemento.parentNode.removeChild(elemento);
+        }
+      }, 20000);
+    }, index * 2000);
+  });
+}
+
+// 🔹 Iniciar ecuaciones matemáticas
+crearEcuacionesMatematicas();
+setInterval(crearEcuacionesMatematicas, 25000);
+
 // 🔹 Referencias a los elementos del DOM
 const jugadores = [
   document.getElementById("j1"),
