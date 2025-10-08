@@ -1,63 +1,95 @@
 body {
-  background: linear-gradient(135deg, #1e90ff, #87cefa);
+    background: linear-gradient(135deg, #ffffff, #8d8d8d, #707070);
+  background-size: 400% 400%;
+  animation: fondo 10s ease infinite;
+  color: white;
   font-family: 'Segoe UI', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100vh;  
   margin: 0;
+  overflow: hidden;
+}
+
+@keyframes fondo {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.equation {
+  position: absolute;
+  color: white;
+  font-size: 24px;
+  font-family: 'Courier New', monospace;
+  animation: float 12s linear infinite;
+}
+
+@keyframes float {
+  from { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  30% { opacity: 1; }
+  to { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
 }
 
 .container {
-  background: white;
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  background: rgba(116, 103, 103, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
   text-align: center;
-  width: 400px;
-}
-
-h1 {
-  margin-bottom: 20px;
-  color: #003366;
-}
-
-.players-section {
-  margin-top: 20px;
 }
 
 .players {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 25px;
 }
 
 .player label {
-  display: block;
+  margin-bottom: 10px;
+}
+
+.titulo {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3.5rem;
+  color: #000000;
+  text-shadow: 0 0 10px rgba(0, 191, 255, 0.8),
+               0 0 20px rgba(0, 191, 255, 0.6),
+               0 0 40px rgba(0, 191, 255, 0.4);
+  letter-spacing: 3px;
+  text-align: center;
   font-weight: bold;
-  margin-bottom: 5px;
+  opacity: 0;
+  animation: aparecer 2s ease forwards, brillo 3s infinite alternate;
 }
 
-.player input {
-  width: 100%;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+/* ✨ Aparece suavemente desde arriba */
+@keyframes aparecer {
+  0% {
+    transform: translate(-50%, -30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
 }
 
-button {
-  background-color: #1e90ff;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 20px;
-  margin-top: 25px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background-color: #003366;
+/* 💡 Brillo pulsante tipo neón */
+@keyframes brillo {
+  0% {
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.5),
+                 0 0 20px rgba(0, 191, 255, 0.4),
+                 0 0 30px rgba(0, 191, 255, 0.2);
+  }
+  100% {
+    text-shadow: 0 0 20px rgba(0, 255, 255, 1),
+                 0 0 40px rgba(0, 255, 255, 0.8),
+                 0 0 60px rgba(0, 255, 255, 0.6);
+  }
 }
