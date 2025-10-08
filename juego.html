@@ -9,31 +9,57 @@
 <body>
   <h1 class="titulo">Juego de Adivinanza</h1>
 
-  <div class="jugadores">
-    <button class="jugador" id="j1"></button>
-    <button class="jugador" id="j2"></button>
-    <button class="jugador" id="j3"></button>
-    <button class="jugador" id="j4"></button>
+  <div class="contenedor-principal">
+    <!-- Panel izquierdo: Lista de jugadores -->
+    <div class="panel-izquierdo">
+      <h3>Jugadores</h3>
+      <div class="lista-jugadores">
+        <div class="jugador-item" id="j1"></div>
+        <div class="jugador-item" id="j2"></div>
+        <div class="jugador-item" id="j3"></div>
+        <div class="jugador-item" id="j4"></div>
+      </div>
+      <div class="boton-finalizar-container">
+        <button id="finalizarJuego">Finalizar Juego</button>
+      </div>
+    </div>
+
+    <!-- Panel derecho: Selector de jugador y reloj -->
+    <div class="panel-derecho">
+      <h3 id="turno">Selecciona al jugador</h3>
+      <div class="reloj">
+        <span>Tiempo: </span>
+        <span id="tiempo">0</span>
+        <span>s</span>
+      </div>
+      
+      <!-- Registro de jugadores -->
+      <div class="registro-jugadores">
+        <h4>Registro de Tiempos</h4>
+        <div id="lista-registros"></div>
+      </div>
+    </div>
+
+    <!-- Panel central: Casillas del juego -->
+    <div class="panel-central">
+      <div class="palabra">
+        <!-- 8 espacios en línea horizontal -->
+        <span class="letra" id="l1" tabindex="1">_</span>
+        <span class="letra" id="l2" tabindex="2">_</span>
+        <span class="letra" id="l3" tabindex="3">_</span>
+        <span class="letra" id="l4" tabindex="4">_</span>
+        <span class="letra" id="l5" tabindex="5">_</span>
+        <span class="letra" id="l6" tabindex="6">_</span>
+        <span class="letra" id="l7" tabindex="7">_</span>
+        <span class="letra" id="l8" tabindex="8">_</span>
+      </div>
+    </div>
+
+    <!-- Panel inferior: Botones -->
+    <div class="panel-inferior">
+      <button id="nuevaMesa">Nueva Mesa</button>
+    </div>
   </div>
-
-  <h3 id="turno">Selecciona un jugador para comenzar</h3>
-
-  <div class="palabra">
-    <!-- 9 espacios -->
-    <span class="letra" id="l1">_</span>
-    <span class="letra" id="l2">_</span>
-    <span class="letra" id="l3">_</span>
-    <span class="letra" id="l4">_</span>
-    <span class="letra" id="l5">_</span>
-    <span class="letra" id="l6">_</span>
-    <span class="letra" id="l7">_</span>
-    <span class="letra" id="l8">_</span>
-    <span class="letra" id="l9">_</span>
-  </div>
-
-  <h3>Tiempo total: <span id="tiempo">0</span> s</h3>
-
-  <button id="nuevaMesa">Nueva mesa</button>
 
   <script src="juego.js"></script>
 </body>
