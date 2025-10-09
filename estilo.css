@@ -13,7 +13,7 @@ body {
   position: relative;
 }
 
-/* Efectos de fondo matemático */
+
 body::before {
   content: '';
   position: absolute;
@@ -41,7 +41,7 @@ body::before {
   100% { transform: rotate(360deg) scale(1); }
 }
 
-/* Ecuaciones matemáticas flotantes */
+
 .equation {
   position: absolute;
   color: rgba(0, 191, 255, 0.6);
@@ -131,7 +131,7 @@ body::before {
   animation: aparecerDinamico 2s ease forwards, brilloMatematico 4s infinite alternate, pulsarTitulo 6s infinite, gradienteTexto 3s ease infinite;
 }
 
-/* ✨ Aparece dinámicamente con efectos matemáticos */
+
 @keyframes aparecerDinamico {
   0% {
     transform: translate(-50%, -50px) scale(0.5) rotate(-10deg);
@@ -150,7 +150,6 @@ body::before {
   }
 }
 
-/* 💡 Brillo matemático pulsante */
 @keyframes brilloMatematico {
   0% {
     text-shadow: 0 0 15px rgba(0, 191, 255, 0.8),
@@ -172,7 +171,6 @@ body::before {
   }
 }
 
-/* 🔄 Pulsar título con efecto matemático */
 @keyframes pulsarTitulo {
   0%, 100% {
     transform: translateX(-50%) scale(1);
@@ -182,7 +180,6 @@ body::before {
   }
 }
 
-/* 🌈 Gradiente de texto dinámico */
 @keyframes gradienteTexto {
   0% {
     background-position: 0% 50%;
@@ -195,7 +192,6 @@ body::before {
   }
 }
 
-/* 🎮 Estilos para el juego */
 .contenedor-principal {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
