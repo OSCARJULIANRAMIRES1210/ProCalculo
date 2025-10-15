@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Datos del Juego</title>
+  <script src="db.js"></script>
+  <script src="datos.js" defer></script>
+</head>
+<body>
+  <h2>CRUD Preguntas</h2>
+  <form id="formPregunta">
+    <input type="hidden" id="idPregunta" />
+    <input type="text" id="pregunta" placeholder="Pregunta" required />
+    <input type="text" id="respuesta" placeholder="Respuesta" required />
+    <button type="submit">Guardar</button>
+  </form>
+
+  <table border="1">
+    <thead>
+      <tr><th>ID</th><th>Pregunta</th><th>Respuesta</th><th>Acciones</th></tr>
+    </thead>
+    <tbody id="tablaPreguntas"></tbody>
+  </table>
+
+  <h2>Movimientos Registrados</h2>
+  <table border="1">
+    <thead>
+      <tr><th>Mesa</th><th>Jugador</th><th>Letra</th><th>Posición</th><th>Tiempo</th><th>Correcta</th></tr>
+    </thead>
+    <tbody id="tablaMovimientos"></tbody>
+  </table>
+</body>
+</html>

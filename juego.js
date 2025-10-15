@@ -1,5 +1,151 @@
+// juego.js
 
+// ----------------------
+// Referencias DOM
+// ----------------------
+const turnoTxt = document.getElementById("turno");
+const tiempoTxt = document.getElementById("tiempo");
+const letras = document.querySelectorAll(".letra");
+const nuevaMesa = document.getElementById("nuevaMesa");
+const botones = [
+  document.getElementById("j1"),
+  document.getElementById("j2"),
+  document.getElementById("j3"),
+  document.getElementById("j4")
+];
+const preguntaEl = document.createElement("h2");
+document.body.insertBefore(preguntaEl, document.body.children[1]);
+
+// ----------------------
+// Variables de juego
+// ----------------------
+let tiempo = 0;
+let intervalo = null;
+let jugadorActivo = null;
+let respuestaCorrecta = "";
+let letrasCompletadas = 0;
+
+// ----------------------
+// Obtener mesaId y cargar datos
+// ----------------------
 const params = new URLSearchParams(window.location.search);
+const mesaId = Number(params.get("mesaId"));
+
+(async function init() {
+  const mesa = await DB.getMesaById(mesaId);
+  if (!mesa) {
+    alert("No se encontró la mesa");
+    return;
+  }
+
+  // Mostrar nombres en los botones
+  mesa.jugadores.forEach((nombre, i) => {
+    if (nombre) botones[i].textContent = nombre;
+  });
+
+  // Cargar pregunta activa
+  if (!mesa.preguntaId) {
+    alert("La mesa no tiene pregunta asignada");
+    return;
+  }
+
+  const pregunta = await DB.getPreguntaById(mesa.preguntaId);
+  if (!pregunta) {
+    alert("No se encontró la pregunta");
+    return;
+  }
+
+  preguntaEl.textContent = pregunta.pregunta;
+  respuestaCorrecta = pregunta.respuesta.toUpperCase();
+
+  // Ajustar número de letras según respuesta
+  letras.forEach((el, index) => {
+    if (index < respuestaCorrecta.length) {
+      el.textContent = "_";
+    } else {
+      el.style.display = "none";
+    }
+  });
+})();
+
+// ----------------------
+// Funciones de juego
+// ----------------------
+function iniciarTiempo() {
+  if (!intervalo) {
+    intervalo = setInterval(() => {
+      tiempo++;
+      tiempoTxt.textContent = tiempo;
+    }, 1000);
+  }
+}
+
+// Seleccionar jugador
+botones.forEach(btn => {
+  btn.addEventListener("click", () => {
+    jugadorActivo = btn.textContent;
+    turnoTxt.textContent = `Turno de: ${jugadorActivo}`;
+    iniciarTiempo();
+  });
+});
+
+// Manejo de letras
+letras.forEach((letraEl, index) => {
+  letraEl.addEventListener("click", async () => {
+    if (!jugadorActivo) {
+      alert("Selecciona un jugador primero");
+      return;
+    }
+    if (letraEl.textContent !== "_") {
+      alert("Esta posición ya fue completada");
+      return;
+    }
+
+    const caracter = prompt(`Turno de ${jugadorActivo}: escribe una letra`);
+    if (!caracter || caracter.length !== 1) return;
+
+    const letra = caracter.toUpperCase();
+    const correcta = respuestaCorrecta[index] === letra;
+
+    if (correcta) {
+      letraEl.textContent = letra;
+      letraEl.classList.add("ok");
+      letrasCompletadas++;
+    } else {
+      letraEl.classList.add("error");
+      alert("Letra incorrecta");
+    }
+
+    // Registrar movimiento en IndexedDB
+    await DB.addMovimiento({
+      mesaId,
+      jugador: jugadorActivo,
+      letra,
+      posicion: index,
+      tiempo,
+      correcta
+    });
+
+    // Terminar juego solo si completó toda la palabra correcta
+    if (letrasCompletadas === respuestaCorrecta.length) {
+      clearInterval(intervalo);
+      const mesa = await DB.getMesaById(mesaId);
+      mesa.tiempoTotal = tiempo;
+      await DB.updateMesa(mesa);
+
+      alert(`🎉 ¡Juego terminado en ${tiempo} segundos!`);
+    }
+  });
+});
+
+// ----------------------
+// Nueva mesa
+// ----------------------
+nuevaMesa.addEventListener("click", () => {
+  clearInterval(intervalo);
+  window.location.href = "index.html";
+});
+// const params = new URLSearchParams(window.location.search); // Eliminado para evitar redeclaración
 const nombres = [
   params.get("j1") || "Jugador 1",
   params.get("j2") || "Jugador 2",
@@ -61,26 +207,15 @@ const jugadores = [
   document.getElementById("j3"),
   document.getElementById("j4")
 ];
-const turnoTxt = document.getElementById("turno");
-const tiempoTxt = document.getElementById("tiempo");
-const letras = document.querySelectorAll(".letra");
-const nuevaMesa = document.getElementById("nuevaMesa");
 const finalizarJuego = document.getElementById("finalizarJuego");
 const listaRegistros = document.getElementById("lista-registros");
 
-let tiempo = 0;
-let jugadorActivo = null;
+// let jugadorActivo = null; // Eliminado porque ya está declarado arriba
 let indiceJugadorActivo = 0;
-let intervalo = null;
 let juegoIniciado = false;
 let casillaActual = 0;
 let registrosJugadores = [];
 let todosJugaron = false;
-
-nombres.forEach((nombre, i) => {
-  jugadores[i].textContent = nombre;
-  jugadores[i].classList.add("jugador-disponible");
-});
 
 
 function iniciarTiempo() {
