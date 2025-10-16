@@ -95,7 +95,79 @@ async function cargarMovimientos() {
 }
 
 // Inicializar todo al cargar
-window.addEventListener("DOMContentLoaded", () => {
-  cargarPreguntas();
-  cargarMovimientos();
+
+function mostrarJuegos() {
+  const tablaJuegos = document.getElementById("tablaJuegos");
+  tablaJuegos.innerHTML = "";
+  const juegos = JSON.parse(localStorage.getItem("juegos") || "[]");
+  if (juegos.length === 0) {
+    tablaJuegos.innerHTML = "<p>No hay registros de juegos.</p>";
+    return;
+  }
+  const table = document.createElement("table");
+  table.style.margin = "20px auto";
+  table.style.width = "95%";
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th>Grupo</th>
+        <th>Jugadores</th>
+        <th>Jugador</th>
+        <th>Tiempo (s)</th>
+        <th>Palabra</th>
+        <th>Posición</th>
+        <th>Letra</th>
+        <th>Correcta</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  `;
+  const tbody = table.querySelector("tbody");
+  const jugadoresRegistrados = localStorage.getItem("jugadores") || "-";
+  juegos.forEach(j => {
+    if (j.posiciones && Array.isArray(j.posiciones)) {
+      j.posiciones.forEach(pos => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${j.grupo || "-"}</td>
+            <td>${jugadoresRegistrados}</td>
+            <td>${j.jugador}</td>
+            <td>${j.tiempo}</td>
+            <td>${j.palabra}</td>
+            <td>${pos.posicion}</td>
+            <td style="font-weight:bold; color:${pos.correcta ? '#3cff7a' : '#ff3c3c'}">${pos.letra || '_'}</td>
+            <td>${pos.correcta ? '✅' : '❌'}</td>
+          </tr>
+        `;
+      });
+    } else {
+      // Fallback para registros viejos
+      tbody.innerHTML += `
+        <tr>
+          <td>${j.grupo || "-"}</td>
+          <td>${jugadoresRegistrados}</td>
+          <td>${j.jugador}</td>
+          <td>${j.tiempo}</td>
+          <td>${j.palabra}</td>
+          <td>-</td>
+          <td>${j.ingresadas || '-'}</td>
+          <td>-</td>
+        </tr>
+      `;
+    }
+  });
+  tablaJuegos.appendChild(table);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  mostrarJuegos();
+  // ...botón datos y otros...
+  const btnDatos = document.getElementById("btnDatos");
+  if (btnDatos) {
+    btnDatos.addEventListener("click", () => {
+      window.location.href = "datos.html";
+    });
+  }
 });
+
+

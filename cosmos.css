@@ -1,4 +1,80 @@
 /* Cosmos UI — universe with stars and planets */
+/* Galaxia decorativa */
+.galaxy {
+  position: absolute;
+  top: 10vh;
+  right: 10vw;
+  width: 320px;
+  height: 180px;
+  background: radial-gradient(ellipse at center, #fff 0%, #aaf 40%, #44f 70%, transparent 100%);
+  opacity: 0.18;
+  filter: blur(12px) saturate(180%);
+  pointer-events: none;
+  z-index: 0;
+  animation: galaxySpin 60s linear infinite;
+}
+
+@keyframes galaxySpin {
+  0% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(360deg) scale(1.04); }
+}
+
+/* Polvo cósmico */
+.cosmic-dust {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 80%, #fff8 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, #fff5 0%, transparent 70%),
+    radial-gradient(ellipse at 60% 60%, #aaf3 0%, transparent 80%),
+    radial-gradient(ellipse at 40% 30%, #44f2 0%, transparent 90%);
+  opacity: 0.12;
+  filter: blur(8px) saturate(120%);
+}
+
+/* Más estrellas animadas */
+.shooting-star {
+  position: absolute;
+  width: 2px;
+  height: 80px;
+  background: linear-gradient(180deg, #fff 0%, #aaf 60%, transparent 100%);
+  border-radius: 2px;
+  opacity: 0.7;
+  filter: blur(0.5px) drop-shadow(0 0 8px #fff8);
+  animation: shootingStarMove 2.2s linear infinite;
+}
+
+.shooting-star-1 { top: 12vh; left: 10vw; animation-delay: 0s; }
+.shooting-star-2 { top: 38vh; left: 60vw; animation-delay: 1.1s; }
+.shooting-star-3 { top: 70vh; left: 30vw; animation-delay: 0.7s; }
+
+@keyframes shootingStarMove {
+  0% { opacity: 0; transform: translateY(-40px) scaleX(1.2) rotate(-20deg); }
+  10% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(120px) scaleX(1.2) rotate(-20deg); }
+}
+.star-1 { top:8vh; left:12vw; }
+.star-2 { top:22vh; left:80vw; }
+.star-3 { top:60vh; left:40vw; }
+.star-4 { top:70vh; left:20vw; }
+.star-5 { top:30vh; left:60vw; }
+.star {
+  position: absolute;
+  width: 2px; height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: starTwinkle 2.5s infinite alternate;
+}
+
+@keyframes starTwinkle {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
 html, body {
   margin: 0;
   padding: 0;
@@ -76,6 +152,15 @@ body::after {
   border-radius: 50%;
   filter: drop-shadow(0 20px 40px rgba(0,0,0,0.35));
   z-index: 0;
+  animation: planetFloat 12s ease-in-out infinite alternate;
+}
+
+@keyframes planetFloat {
+  0% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-12px) scale(1.03); }
+  50% { transform: translateY(8px) scale(1.01); }
+  70% { transform: translateY(-8px) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
 }
 
 .planet--blue {
@@ -235,12 +320,29 @@ button:hover,
 .panel-derecho,
 .panel-central,
 .panel-inferior {
-  background: rgba(10, 16, 34, 0.55);
-  border: 1px solid rgba(120, 220, 255, 0.18);
-  border-radius: 14px;
-  padding: 16px;
-  margin: 10px;
-  box-shadow: 0 0 0 1px rgba(0, 132, 255, 0.15), 0 10px 26px rgba(0, 32, 64, 0.35);
+  background: linear-gradient(135deg, rgba(20, 30, 60, 0.75) 0%, rgba(40, 60, 120, 0.55) 100%);
+  border: 1.5px solid rgba(120, 220, 255, 0.22);
+  border-radius: 22px;
+  padding: 22px 18px;
+  margin: 14px;
+  box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.18), 0 16px 38px rgba(0, 32, 64, 0.45), 0 0 32px 2px #4f9cff22;
+  animation: panelGlow 8s ease-in-out infinite alternate;
+}
+
+.panel-izquierdo {
+  background: linear-gradient(120deg, rgba(30, 40, 80, 0.85) 0%, rgba(60, 90, 180, 0.45) 100%);
+  border: 2px solid rgba(120, 220, 255, 0.28);
+  border-radius: 28px;
+  padding: 28px 20px;
+  margin: 14px;
+  box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.22), 0 18px 44px rgba(0, 32, 64, 0.55), 0 0 42px 2px #4f9cff33;
+  animation: panelGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes panelGlow {
+  0% { box-shadow: 0 0 0 2px rgba(0,132,255,0.18), 0 16px 38px rgba(0,32,64,0.45), 0 0 32px 2px #4f9cff22; }
+  50% { box-shadow: 0 0 0 4px rgba(0,132,255,0.28), 0 24px 48px rgba(0,32,64,0.55), 0 0 52px 4px #4f9cff44; }
+  100% { box-shadow: 0 0 0 2px rgba(0,132,255,0.18), 0 16px 38px rgba(0,32,64,0.45), 0 0 32px 2px #4f9cff22; }
 }
 
 /* Game page layout: center letters, players on the right */
@@ -299,7 +401,7 @@ body.game-page .panel-central .palabra {
   body.game-page .reloj { position: static; margin-bottom: 8px; }
 }
 
-.jugador-item { background: rgba(255,255,255,0.08); margin: 8px 0; padding: 12px; border-radius: 10px; text-align: center; transition: background 0.2s ease, box-shadow 0.2s ease; }
+.jugador-item { background: rgba(255,255,255,0.08); margin: 8px 0; padding: 12px; border-radius: 10px; text-align: center; transition: background 0.2s ease, box-shadow 0.2s ease; font-size: 1.25em; }
 .jugador-item:hover { background: rgba(0,229,255,0.16); box-shadow: 0 0 18px rgba(0,229,255,0.28); }
 
 /* Letters */
