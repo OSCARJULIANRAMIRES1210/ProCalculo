@@ -1,15 +1,22 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juego</title>
-  <link rel="stylesheet" href="estilo.css">
+  <title>Registro de Jugadores</title>
+  <link rel="stylesheet" href="cosmos.css">
 </head>
-<body>
-  <h1 class="titulo">Ciencias 4D</h1>
+<body class="index-page">
+  <h1>Ciencias 4D</h1>
+
   <div class="container">
     <div class="players-section">
+      <h2>Registro de Grupo</h2>
+      <div class="player">
+        <label>Nombre del grupo:</label>
+        <input type="text" id="grupo" placeholder="Ej. Equipo Alfa" required>
+      </div>
       <h2>Jugadores</h2>
       <div class="players">
         <div class="player">
@@ -30,15 +37,25 @@
         </div>
       </div>
       <button id="btnIniciar">Iniciar</button>
-      <button id="btnDatos">datos</button>
     </div>
   </div>
 
-  <!-- Vinculación del archivo JS -->
-  <script src="script.js"></script>
-  <script src="db.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.getElementById("btnIniciar").addEventListener("click", () => {
+      const grupo = document.getElementById("grupo").value.trim();
+      const j1 = document.getElementById("jugador1").value.trim();
+      const j2 = document.getElementById("jugador2").value.trim();
+      const j3 = document.getElementById("jugador3").value.trim();
+      const j4 = document.getElementById("jugador4").value.trim();
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      if (!grupo || (!j1 && !j2 && !j3 && !j4)) {
+        alert("Ingresa el nombre del grupo y al menos un jugador.");
+        return;
+      }
+
+      const url = `juego.html?grupo=${encodeURIComponent(grupo)}&j1=${encodeURIComponent(j1)}&j2=${encodeURIComponent(j2)}&j3=${encodeURIComponent(j3)}&j4=${encodeURIComponent(j4)}`;
+      window.location.href = url;
+    });
+  </script>
 </body>
 </html>
